@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>羽毛球拍推荐结果</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .racket-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .racket-card {
+            display: flex;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .racket-image {
+            width: 300px;
+            height: 400px;
+            object-fit: cover;
+            border-right: 1px solid #eee;
+        }
+
+        .racket-info {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .racket-basic-info {
+            margin-bottom: 20px;
+        }
+
+        .racket-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .racket-meta {
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .racket-price {
+            color: #e53935;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .attributes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .attribute {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        .attribute-name {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: #4CAF50;
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .attribute-value {
+            font-size: 12px;
+            color: #888;
+            margin-top: 3px;
+            text-align: right;
+        }
+
+        @media (max-width: 768px) {
+            .racket-card {
+                flex-direction: column;
+            }
+
+            .racket-image {
+                width: 100%;
+                height: 300px;
+            }
+
+            .attributes-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .back-button {
+            display: inline-block;
+            margin: 20px 0;
+            padding: 10px 20px;
+            background-color: #2196F3;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #1976D2;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>推荐羽毛球拍</h1>
+    </div>
+
+    <div class="racket-container">
+        {% for index, row in recommendations.iterrows() %}
+        <div class="racket-card">
+            <div class="racket-info">
+                <div class="racket-basic-info">
+                    <h2 class="racket-name">eid:{{row["name_usuall"] }}</h2>
+                    <a href="https://www.badmintoncn.com/cbo_eq/view.php?eid={{row['eid']}}" target="_blank">链接地址</a>
+                    <div class="racket-meta">重量：{{ row['racket_weight'] }}</div>
+                    <div class="racket-meta">品牌：{{ row['brand'] }}</div>
+                    <div class="racket-price">¥{{ row['price_new'] }}</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <a href="/" class="back-button">返回搜索</a>
+</body>
+</html>

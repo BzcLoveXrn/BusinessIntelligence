@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>羽毛球拍推荐系统</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .slider-container {
+            margin: 15px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            border: 1px solid #eee;
+        }
+
+        .slider-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .slider-group {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .label {
+            width: 80px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .slider-label {
+            width: 50px;
+            color: #666;
+        }
+
+        .slider {
+            flex: 1;
+        }
+
+        .value-display {
+            width: 50px;
+            text-align: center;
+            background: #f5f5f5;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        button[type="submit"] {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #1976D2;
+        }
+
+        .checkbox-group, .price-group {
+            margin: 10px 0;
+        }
+
+        .checkbox-group label {
+            margin-right: 15px;
+        }
+
+        .price-input {
+            width: 120px;
+            padding: 5px;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>羽毛球拍推荐系统</h1>
+        <form id="recommendForm" action="/recommend" method="POST">
+            <div class="section">
+                <h3>品牌选择</h3>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="brands[]" value="尤尼克斯 YONEX"> 尤尼克斯</label>
+                    <label><input type="checkbox" name="brands[]" value="威克多 VICTOR"> 维克多</label>
+                    <label><input type="checkbox" name="brands[]" value="李宁 Lining"> 李宁</label>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>重量选择</h3>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="weights[]" value="2U"> 2U</label>
+                    <label><input type="checkbox" name="weights[]" value="3U"> 3U</label>
+                    <label><input type="checkbox" name="weights[]" value="4U"> 4U</label>
+                    <label><input type="checkbox" name="weights[]" value="5U"> 5U</label>
+                    <label><input type="checkbox" name="weights[]" value="6U"> 6U</label>
+                    <label><input type="checkbox" name="weights[]" value="7U"> 7U</label>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>价格范围</h3>
+                <div class="price-group">
+                    <input type="number" name="price_start" class="price-input" placeholder="最低价格">
+                    -
+                    <input type="number" name="price_end" class="price-input" placeholder="最高价格">
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>属性设置</h3>
+                <div class="sliders">
+                    <!-- 入门 -->
+                    <div class="slider-container">
+                        <div class="slider-row">
+                            <div class="label">入门</div>
+                            <div class="slider-group">
+                                <span class="slider-label">值</span>
+                                <input type="range" class="slider" name="入门_值"
+                                       min="0" max="1" step="0.01" value="0">
+                                <span class="value-display">0.00</span>
+                            </div>
+                            <div class="slider-group">
+                                <span class="slider-label">权重</span>
+                                <input type="range" class="slider" name="入门_权重"
+                                       min="0" max="10" step="1" value="0">
+                                <span class="value-display">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 高端 -->
+                    <div class="slider-container">
+                        <div class="slider-row">
+                            <div class="label">高端</div>
+                            <div class="slider-group">
+                                <span class="slider-label">值</span>
+                                <input type="range" class="slider" name="高端_值"
+                                       min="0" max="1" step="0.01" value="0">
+                                <span class="value-display">0.00</span>
+                            </div>
+                            <div class="slider-group">
+                                <span class="slider-label">权重</span>
+                                <input type="range" class="slider" name="高端_权重"
+                                       min="0" max="10" step="1" value="0">
+                                <span class="value-display">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 性价比 -->
+                    <div class="slider-container">
+                        <div class="slider-row">
+                            <div class="label">性价比</div>
+                            <div class="slider-group">
+                                <span class="slider-label">值</span>
+                                <input type="range" class="slider" name="性价比_值"
+                                       min="0" max="1" step="0.01" value="0">
+                                <span class="value-display">0.00</span>
+                            </div>
+                            <div class="slider-group">
+                                <span class="slider-label">权重</span>
+                                <input type="range" class="slider" name="性价比_权重"
+                                       min="0" max="10" step="1" value="0">
+                                <span class="value-display">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 暴力 -->
+                    <div class="slider-container">
+                        <div class="slider-row">
+                            <div class="label">暴力</div>
+                            <div class="slider-group">
+                                <span class="slider-label">值</span>
+                                <input type="range" class="slider" name="暴力_值"
+                                       min="0" max="1" step="0.01" value="0">
+                                <span class="value-display">0.00</span>
+                            </div>
+                            <div class="slider-group">
+                                <span class="slider-label">权重</span>
+                                <input type="range" class="slider" name="暴力_权重"
+                                       min="0" max="10" step="1" value="0">
+                                <span class="value-display">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 进攻 -->
+                    <div class="slider-container">
+                        <div class="slider-row">
+                            <div class="label">进攻</div>
+                            <div class="slider-group">
+                                <span class="slider-label">值</span>
+                                <input type="range" class="slider" name="进攻_值"
+                                       min="0" max="1" step="0.01" value="0">
+                                <span class="value-display">0.00</span>
+                            </div>
+                            <div class="slider-group">
+                                <span class="slider-label">权重</span>
+                                <input type="range" class="slider" name="进攻_权重"
+                                       min="0" max="10" step="1" value="0">
+                                <span class="value-display">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 杀球 -->
+                    <div class="slider-container">
+                        <div class="slider-row">
+                            <div class="label">杀球</div>
+                            <div class="slider-group">
+                                <span class="slider-label">值</span>
+                                <input type="range" class="slider" name="杀球_值"
+                                       min="0" max="1" step="0.01" value="0">
+                                <span class="value-display">0.00</span>
+                            </div>
+                            <div class="slider-group">
+                                <span class="slider-label">权重</span>
+                                <input type="range" class="slider" name="杀球_权重"
+                                       min="0" max="10" step="1" value="0">
+                                <span class="value-display">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 控制 -->
+                    <div class="slider-container">
+                        <div class="slider-row">
+                            <div class="label">控制</div>
+                            <div class="slider-group">
+                                <span class="slider-label">值</span>
+                                <input type="range" class="slider" name="控制_值"
+                                       min="0" max="1" step="0.01" value="0">
+                                <span class="value-display">0.00</span>
+                            </div>
+                            <div class="slider-group">
+                                <span class="slider-label">权重</span>
+                                <input type="range" class="slider" name="控制_权重"
+                                       min="0" max="10" step="1" value="0">
+                                <span class="value-display">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 头重 -->
+                    <div class="slider-container">
+                        <div class="slider-row">
+                            <div class="label">头重</div>
+                            <div class="slider-group">
+                                <span class="slider-label">值</span>
+                                <input type="range" class="slider" name="头重_值"
+                                       min="0" max="1" step="0.01" value="0">
+                                <span class="value-display">0.00</span>
+                            </div>
+                            <div class="slider-group">
+                                <span class="slider-label">权重</span>
+                                <input type="range" class="slider" name="头重_权重"
+                                       min="0" max="10" step="1" value="0">
+                                <span class="value-display">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 连贯 -->
+                    <div class="slider-container">
+                        <div class="slider-row">
+                            <div class="label">连贯</div>
+                            <div class="slider-group">
+                                <span class="slider-label">值</span>
+                                <input type="range" class="slider" name="连贯_值"
+                                       min="0" max="1" step="0.01" value="0">
+                                <span class="value-display">0.00</span>
+                            </div>
+                            <div class="slider-group">
+                                <span class="slider-label">权重</span>
+                                <input type="range" class="slider" name="连贯_权重"
+                                       min="0" max="10" step="1" value="0">
+                                <span class="value-display">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 速度 -->
+                    <div class="slider-container">
+                        <div class="slider-row">
+                            <div class="label">速度</div>
+                            <div class="slider-group">
+                                <span class="slider-label">值</span>
+                                <input type="range" class="slider" name="速度_值"
+                                       min="0" max="1" step="0.01" value="0">
+                                <span class="value-display">0.00</span>
+                            </div>
+                            <div class="slider-group">
+                                <span class="slider-label">权重</span>
+                                <input type="range" class="slider" name="速度_权重"
+                                       min="0" max="10" step="1" value="0">
+                                <span class="value-display">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 中杆硬 -->
+                    <div class="slider-container">
+                        <div class="slider-row">
+                            <div class="label">中杆硬</div>
+                            <div class="slider-group">
+                                <span class="slider-label">值</span>
+                                <input type="range" class="slider" name="中杆硬_值"
+                                       min="0" max="1" step="0.01" value="0">
+                                <span class="value-display">0.00</span>
+                            </div>
+                            <div class="slider-group">
+                                <span class="slider-label">权重</span>
+                                <input type="range" class="slider" name="中杆硬_权重"
+                                       min="0" max="10" step="1" value="0">
+                                <span class="value-display">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 中杆软 -->
+                    <div class="slider-container">
+                        <div class="slider-row">
+                            <div class="label">中杆软</div>
+                            <div class="slider-group">
+                                <span class="slider-label">值</span>
+                                <input type="range" class="slider" name="中杆软_值"
+                                       min="0" max="1" step="0.01" value="0">
+                                <span class="value-display">0.00</span>
+                            </div>
+                            <div class="slider-group">
+                                <span class="slider-label">权重</span>
+                                <input type="range" class="slider" name="中杆软_权重"
+                                       min="0" max="10" step="1" value="0">
+                                <span class="value-display">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 糖水 -->
+                    <div class="slider-container">
+                        <div class="slider-row">
+                            <div class="label">糖水</div>
+                            <div class="slider-group">
+                                <span class="slider-label">值</span>
+                                <input type="range" class="slider" name="糖水_值"
+                                       min="0" max="1" step="0.01" value="0">
+                                <span class="value-display">0.00</span>
+                            </div>
+                            <div class="slider-group">
+                                <span class="slider-label">权重</span>
+                                <input type="range" class="slider" name="糖水_权重"
+                                       min="0" max="10" step="1" value="0">
+                                <span class="value-display">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 颜值 -->
+                    <div class="slider-container">
+                        <div class="slider-row">
+                            <div class="label">颜值</div>
+                            <div class="slider-group">
+                                <span class="slider-label">值</span>
+                                <input type="range" class="slider" name="颜值_值"
+                                       min="0" max="1" step="0.01" value="0">
+                                <span class="value-display">0.00</span>
+                            </div>
+                            <div class="slider-group">
+                                <span class="slider-label">权重</span>
+                                <input type="range" class="slider" name="颜值_权重"
+                                       min="0" max="10" step="1" value="0">
+                                <span class="value-display">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 拉吊 -->
+                    <div class="slider-container">
+                        <div class="slider-row">
+                            <div class="label">拉吊</div>
+                            <div class="slider-group">
+                                <span class="slider-label">值</span>
+                                <input type="range" class="slider" name="拉吊_值"
+                                       min="0" max="1" step="0.01" value="0">
+                                <span class="value-display">0.00</span>
+                            </div>
+                            <div class="slider-group">
+                                <span class="slider-label">权重</span>
+                                <input type="range" class="slider" name="拉吊_权重"
+                                       min="0" max="10" step="1" value="0">
+                                <span class="value-display">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit">获取推荐</button>
+        </form>
+    </div>
+
+    <script>
+        // 更新滑块值显示
+        document.querySelectorAll('.slider').forEach(slider => {
+            slider.addEventListener('input', function() {
+                const display = this.parentElement.querySelector('.value-display');
+                const value = this.value;
+                // 如果是值滑块（step为0.01），显示两位小数
+                if (this.step === '0.01') {
+                    display.textContent = parseFloat(value).toFixed(2);
+                } else {
+                    display.textContent = value;
+                }
+            });
+        });
+
+        // 表单验证
+        document.getElementById('recommendForm').addEventListener('submit', function(e) {
+            const priceStart = document.querySelector('[name="price_start"]').value;
+            const priceEnd = document.querySelector('[name="price_end"]').value;
+
+            if (priceStart && priceEnd && parseInt(priceStart) > parseInt(priceEnd)) {
+                e.preventDefault();
+                alert('起始价格不能大于结束价格！');
+            }
+        });
+    </script>
+</body>
+</html>
