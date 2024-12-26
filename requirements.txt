@@ -1,12 +1,16 @@
 Flask==3.1.0
+gensim==4.3.3
 itemadapter==0.9.0
 itemadapter==0.10.0
+jieba==0.42.1
 matplotlib==3.10.0
 numpy==2.2.1
 pandas==2.2.3
 Requests==2.32.3
+scikit_learn==1.6.0
 Scrapy==2.11.2
 Scrapy==2.12.0
 torch==2.5.1
 transformers==4.47.1
 Twisted==24.11.0
+wordcloud==1.9.4
