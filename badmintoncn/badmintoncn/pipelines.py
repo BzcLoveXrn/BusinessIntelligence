@@ -36,7 +36,7 @@ class XlsxExportPipeline:
     def close_spider(self, spider):
         # 当爬虫关闭时，将数据保存为不同的 Excel 文件
         if self.info_data:
-            file_path = 'info_data.csv'
+            file_path = '../DataAnalysis/data/info_data.csv'
             df = pd.DataFrame(self.info_data)
             if os.path.exists(file_path):
                 df.to_csv(file_path, index=False, header=False, mode='a')
@@ -47,7 +47,7 @@ class XlsxExportPipeline:
 
 
         if self.comment_data:
-            file_path = 'comment_data.csv'
+            file_path = '../DataAnalysis/data/comment_data.csv'
             df = pd.DataFrame(self.comment_data)
             if os.path.exists(file_path):
                 df.to_csv(file_path, index=False, header=False, mode='a')
@@ -57,7 +57,7 @@ class XlsxExportPipeline:
                 print("Data has been written to output.csv")
 
         if self.train_data:
-            file_path = 'train_data.csv'
+            file_path = '../DataAnalysis/data/train_data.csv'
             df = pd.DataFrame(self.train_data)
             if os.path.exists(file_path):
                 df.to_csv(file_path, index=False, header=False, mode='a')
